@@ -1,22 +1,4 @@
-const { v4 } = require('uuid');
 const db = require('../../database');
-
-let contacts = [
-  {
-    id: v4(),
-    name: 'Mariana',
-    email: 'mariana@icloud.com',
-    phone: '11998877665',
-    category_id: v4(),
-  },
-  {
-    id: v4(),
-    name: 'Camila',
-    email: 'camila@icloud.com',
-    phone: '15998877665',
-    category_id: v4(),
-  },
-];
 
 class ContactsRepository {
   async findAll(orderBy = 'ASC') {
@@ -64,11 +46,10 @@ class ContactsRepository {
     return row;
   }
 
-  delete(id) {
-    return new Promise((resolve) => {
-      contacts = contacts.filter((contact) => contact.id !== id);
-      resolve();
-    });
+  async delete(id) {
+    const deleteOp = await db.query(`DELETE FROM contacts WHERE id = $1`, [id]);
+
+    return deleteOp;
   }
 }
 
