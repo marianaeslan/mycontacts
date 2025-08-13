@@ -6,6 +6,7 @@ const app = express();
 
 app.use(express.json());
 app.use(routes);
+// eslint-disable-next-line no-unused-vars
 app.use((error, request, response, next) => {
   console.log(error);
   response.sendStatus(500);
